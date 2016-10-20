@@ -1,0 +1,23 @@
+<configuration debug="true">
+    <property name="FILE_LOG_ROOT" value="." />
+    <include resource="logback/logback-appender.xml"/>
+
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.mybatis" level="ERROR"/>
+    <logger name="org.apache.http" level="ERROR"/>
+    <logger name="com.nhncorp.owfs" level="ERROR"/>
+    <logger name="com.nhncorp.redis.cluster.gateway" level="ERROR"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+
+    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="ERROR"/>
+    <logger name="jdbc.audit" level="ERROR"/>
+    <logger name="jdbc.resultset" level="ERROR"/>
+    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="jdbc.connection" level="ERROR"/>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>

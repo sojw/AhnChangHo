@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+        	<charset>UTF-8</charset>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} %M:%L - %msg%n%ex</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="ERROR"/>
+    <logger name="org.mybatis" level="DEBUG"/>
+    <logger name="org.apache.http" level="ERROR"/>
+    <logger name="com.nhncorp.owfs" level="ERROR"/>
+    <logger name="com.nhncorp.redis.cluster.gateway" level="ERROR"/>
+    <logger name="com.zaxxer.hikari" level="ERROR"/>
+    <logger name="com.github.jknack.handlebars" level="ERROR"/>
+    <logger name="com.github.jknack.handlebars-springmvc" level="ERROR"/>
+
+    <!-- log4jdbc-log4j2 -->
+    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="ERROR"/>
+    <logger name="jdbc.audit" level="ERROR"/>
+    <logger name="jdbc.resultset" level="ERROR"/>
+    <logger name="jdbc.resultsettable" level="ERROR"/>
+    <logger name="jdbc.connection" level="ERROR"/>
+
+    <logger name="com.naver.plug" level="DEBUG"/>
+
+	<root level="INFO">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+</configuration>
