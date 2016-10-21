@@ -28,7 +28,7 @@ public class MessageConfig {
 		source.setCacheSeconds(0);
 		source.setUseCodeAsDefaultMessage(true);
 
-		String[] messageSourceBaseNames = {"classpath:META-INF/messages/messages/messages", "classpath:META-INF/messages/errors/errors", "classpath:META-INF/messages/validations/validations"};
+		String[] messageSourceBaseNames = {"classpath:META-INF/messages/"};
 		source.setBasenames(messageSourceBaseNames);
 
 		return source;

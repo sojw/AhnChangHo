@@ -44,7 +44,7 @@ public class RootContextConfig implements ResourceLoaderAware {
 
 	private ResourceLoader resourceLoader;
 
-	//	@Override
+	@Override
 	public void setResourceLoader(ResourceLoader resourceLoader) {
 		this.resourceLoader = resourceLoader;
 	}

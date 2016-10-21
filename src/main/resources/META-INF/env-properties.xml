@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 	<util:properties id="env">
-        <prop key="profile">dev</prop>
+        <prop key="profile">real</prop>
         <prop key="httpSocketTimeout">50000</prop>
         <prop key="httpConnectTimeout">50000</prop>
         <prop key="httpSocketLongTimeout">100000</prop>

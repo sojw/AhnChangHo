@@ -1,5 +1,8 @@
 package com.sojw.ahnchangho.batch.job.dividenstock;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -12,39 +15,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.sojw.ahnchangho.core.model.DividenStock;
+import com.sojw.ahnchangho.core.model.CompanyInfo;
 
 @Configuration
 @EnableBatchProcessing
-public class DividenStockJob {
-	@Autowired
-	private ItemReader<String> dividenStockItemReader;
+public class DividenStockJobConfig {
+	public static final String JOB_NAME = "dividenStockJob";
+	private static final String STEP_NAME = "dividenStockStep";
 
 	@Autowired
-	private ItemWriter<DividenStock> dividenStockItemWriter;
+	private ItemReader<List<CompanyInfo>> dividenStockItemReader;
 
 	@Autowired
-	private ItemProcessor<? super String, ? extends DividenStock> dividenStockItemProcessor;
+	private ItemWriter<Map<String, Double>> dividenStockItemWriter;
 
-	//	@Bean
-	//	public DividenStockItemProcessor dividenStockItemProcessor() {
-	//		return new DividenStockItemProcessor();
-	//	}
+	@Autowired
+	private ItemProcessor<? super List<CompanyInfo>, ? extends Map<String, Double>> dividenStockItemProcessor;
 
-	/*
-	 * step 샘플
-	 */
 	@Bean
 	public TaskletStep dividenStockStep(StepBuilderFactory stepBuilderFactory) throws Exception {
-		return stepBuilderFactory.get("DividenStockStep").<String, DividenStock> chunk(1).reader(dividenStockItemReader).processor(dividenStockItemProcessor).writer(
+		return stepBuilderFactory.get(STEP_NAME).<List<CompanyInfo>, Map<String, Double>> chunk(1).reader(dividenStockItemReader).processor(dividenStockItemProcessor).writer(
 			dividenStockItemWriter).build();
 	}
 
-	/*
-	 * job 샘플
-	 */
 	@Bean
 	public Job dividenStockJob(JobBuilderFactory jobBuilderFactory, TaskletStep dividenStockStep) throws Exception {
-		return jobBuilderFactory.get("DividenStockJob").start(dividenStockStep).build();
+		return jobBuilderFactory.get(JOB_NAME).start(dividenStockStep).build();
 	}
 }

@@ -7,10 +7,11 @@ import org.springframework.batch.core.launch.support.SimpleJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
-import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJob;
+import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
 
 /**
  * SpringBatchConfig
@@ -21,7 +22,8 @@ import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJob;
  * job이 추가될 때 클래스를 job 설정 클래스를 Import 해야함.
  */
 @Configuration
-@Import({DividenStockJob.class})
+@ComponentScan(basePackages = "com.sojw.ahnchangho.batch.job")
+@Import({DividenStockJobConfig.class})
 public class SpringBatchConfig {
 	@Bean
 	public JobRegistry jobRegistry() {
