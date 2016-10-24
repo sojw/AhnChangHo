@@ -45,8 +45,8 @@ public class DividenStockItemProcessor implements ItemProcessor<List<CompanyInfo
 					if (StringUtils.startsWith(element.text(), "현금배당수익률")) {
 						final Double num = NumberUtils.toDouble(element.getElementsByTag("b").first().text().replaceAll("%", ""));
 						if (num > 0) {
-							rank.put(item.getName(), num);
-//							LOG.info("stockCode : {}, 회사: {}, 현금배당수익률 : {}", item.getStockCode(), item.getName(), num);
+							rank.put(item.getName() + "(" + item.getStockCode() + ")", num);
+							//							LOG.info("stockCode : {}, 회사: {}, 현금배당수익률 : {}", item.getStockCode(), item.getName(), num);
 						}
 						break;
 					}

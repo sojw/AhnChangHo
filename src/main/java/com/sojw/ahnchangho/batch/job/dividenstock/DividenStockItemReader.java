@@ -40,7 +40,7 @@ public class DividenStockItemReader implements ItemReader<List<CompanyInfo>> {
 		try {
 			count++;
 
-			List<CompanyInfo> companyInfoList = csv();
+			List<CompanyInfo> companyInfoList = companyInfo();
 			//			List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\stockcode.txt"), Charset.defaultCharset());
 			//			List<String> stockCodeList = resourceLoaderUtil.loadFileContents("classpath:stock_code_ver2.txt");
 			//			LOG.info("stock code count : {}", stockCodeList.size());
@@ -59,7 +59,7 @@ public class DividenStockItemReader implements ItemReader<List<CompanyInfo>> {
 	 * @return the list
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 */
-	public List<CompanyInfo> csv() throws IOException {
+	public List<CompanyInfo> companyInfo() throws IOException {
 		List<CompanyInfo> companyInfoList = Lists.newArrayList();
 		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
 		try (Reader reader = resourceLoaderUtil.getReader("classpath:stock_code_raw.csv")) {
@@ -68,8 +68,8 @@ public class DividenStockItemReader implements ItemReader<List<CompanyInfo>> {
 				String stockCode = record.get("종목코드");
 				String name = record.get("회사명");
 
-//				LOG.debug("종목코드 = {}, 회사명 = {}", stockCode, name);
-				companyInfoList.add(new CompanyInfo(name, stockCode));
+				//				LOG.debug("종목코드 = {}, 회사명 = {}", stockCode, name);
+				companyInfoList.add(new CompanyInfo(name, stockCode, ""));
 			}
 		} catch (Exception e) {
 			LOG.error("", e);
