@@ -33,6 +33,8 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.MustacheFactory;
 import com.sojw.ahnchangho.RootPackageMarker;
 import com.sojw.ahnchangho.core.util.ObjectMapperFactory;
 
@@ -88,6 +90,17 @@ public class RootContextConfig implements ResourceLoaderAware {
 	@Bean
 	public ObjectMapper objectMapper() {
 		return ObjectMapperFactory.mapper();
+	}
+
+	/**
+	 * Mustache factory.
+	 *
+	 * @return the mustache factory
+	 */
+	@Bean
+	public MustacheFactory mustacheFactory() {
+		DefaultMustacheFactory defaultMustacheFactory = new DefaultMustacheFactory();
+		return defaultMustacheFactory;
 	}
 
 	/**

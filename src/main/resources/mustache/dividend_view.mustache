@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow" />
+</head>
+
+<body>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">회사명</th>
+            <th class="text-center">시가</th>
+            <th class="text-center">배당수익률</th>
+            <th class="text-center">배당기록</th>
+            <th class="text-center">기업정보</th>
+        </tr>
+    </thead>
+    <tbody>
+{{#dividenViewList}}
+        <tr>
+            <td align="center">{{stockName}}</td>
+            <td align="center">{{nowVal}}원 / {{rate}}%</td>
+            <td align="center">{{dividen}}%</td>
+            <td align="center">{{divedenRecord}}</td>
+            <td align="center">
+            	<a href="http://finance.naver.com/item/coinfo.nhn?code={{stockCode}}" target="_blank">분석</a> 
+            	<a href="http://finance.naver.com/item/fchart.nhn?code={{stockCode}}" target="_blank">차트</a>
+            </td>
+        </tr>	
+{{/dividenViewList}}		
+    </tbody>
+</table>
+</body>
+
+</html>

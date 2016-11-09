@@ -23,6 +23,8 @@ import com.sojw.ahnchangho.core.model.CompanyInfo;
 @Component
 public class DividenStockItemProcessor implements ItemProcessor<List<CompanyInfo>, Map<String, Double>> {
 	private static final Logger LOG = LoggerFactory.getLogger(DividenStockItemProcessor.class);
+	private static final String COMPANY_INFO = "http://companyinfo.stock.naver.com/v1/company/c1010001.aspx?cmp_cd=";
+	private static final Integer BANK_RATE = 1;
 
 	@Override
 	public Map<String, Double> process(List<CompanyInfo> stockCodeList) throws Exception {
@@ -30,26 +32,31 @@ public class DividenStockItemProcessor implements ItemProcessor<List<CompanyInfo
 
 		Map<String, Double> rank = Maps.newHashMap();
 		stockCodeList.parallelStream().forEach(item -> {
-			Document document = null;
+			Document companyInfoDocument = null;
 			try {
-				document = Jsoup.connect("http://companyinfo.stock.naver.com/v1/company/c1010001.aspx?cmp_cd=" + item.getStockCode()).get();
+				companyInfoDocument = Jsoup.connect(COMPANY_INFO + item.getStockCode()).get();
 			} catch (IOException e) {
 				LOG.error("", e);
 			}
 
-			if (document != null) {
-				Elements elements = document.getElementsByClass("line-left");
-				final String companyName = document.select("span.name").text();
+			if (companyInfoDocument != null) {
+				final Elements lineLeftelements = companyInfoDocument.getElementsByClass("line-left");
+				//				final String companyName = document.select("span.name").text();
 
-				for (Element element : elements) {
-					if (StringUtils.startsWith(element.text(), "현금배당수익률")) {
-						final Double num = NumberUtils.toDouble(element.getElementsByTag("b").first().text().replaceAll("%", ""));
-						if (num > 0) {
-							rank.put(item.getName() + "(" + item.getStockCode() + ")", num);
-							//							LOG.info("stockCode : {}, 회사: {}, 현금배당수익률 : {}", item.getStockCode(), item.getName(), num);
-						}
-						break;
+				for (Element element : lineLeftelements) {
+					if (!StringUtils.startsWith(element.text(), "현금배당수익률")) {
+						continue;
 					}
+
+					final Double num = NumberUtils.toDouble(element.getElementsByTag("b").first().text().replaceAll("%", ""));
+					// 시중 금리 낮은 경우. 제외
+					if (num < BANK_RATE) {
+						continue;
+					}
+
+					rank.put(item.getName() + "(" + item.getStockCode() + ")", num);
+					//							LOG.info("stockCode : {}, 회사: {}, 현금배당수익률 : {}", item.getStockCode(), item.getName(), num);
+					break;
 				}
 			} else {
 				LOG.warn("empty stockCode : {}", item.getStockCode());
