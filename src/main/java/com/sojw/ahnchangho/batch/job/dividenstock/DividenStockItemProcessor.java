@@ -24,7 +24,7 @@ import com.sojw.ahnchangho.core.model.CompanyInfo;
 public class DividenStockItemProcessor implements ItemProcessor<List<CompanyInfo>, Map<String, Double>> {
 	private static final Logger LOG = LoggerFactory.getLogger(DividenStockItemProcessor.class);
 	private static final String COMPANY_INFO = "http://companyinfo.stock.naver.com/v1/company/c1010001.aspx?cmp_cd=";
-	private static final Integer BANK_RATE = 1;
+	private static final Integer BANK_RATE = 2;
 
 	@Override
 	public Map<String, Double> process(List<CompanyInfo> stockCodeList) throws Exception {
