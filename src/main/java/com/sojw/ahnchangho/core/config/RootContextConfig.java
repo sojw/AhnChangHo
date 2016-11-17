@@ -117,18 +117,18 @@ public class RootContextConfig implements ResourceLoaderAware {
 		return factory;
 	}
 
-	/**
-	 * Validation post processor.
-	 *
-	 * @param validator the validator
-	 * @return the method validation post processor
-	 */
-	@Bean
-	public MethodValidationPostProcessor validationPostProcessor(Validator validator) {
-		MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
-		processor.setValidator(validator);
-		return processor;
-	}
+//	/**
+//	 * Validation post processor.
+//	 *
+//	 * @param validator the validator
+//	 * @return the method validation post processor
+//	 */
+//	@Bean
+//	public MethodValidationPostProcessor validationPostProcessor(Validator validator) {
+//		MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+//		processor.setValidator(validator);
+//		return processor;
+//	}
 
 	/**
 	 * Property config in dev.

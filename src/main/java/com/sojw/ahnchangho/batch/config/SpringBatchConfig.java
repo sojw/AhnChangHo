@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
+import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
 /**
  * SpringBatchConfig
@@ -23,7 +24,7 @@ import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
  */
 @Configuration
 @ComponentScan(basePackages = "com.sojw.ahnchangho.batch.job")
-@Import({DividenStockJobConfig.class})
+@Import({DividenStockJobConfig.class, StockalramTaskletJob.class})
 public class SpringBatchConfig {
 	@Bean
 	public JobRegistry jobRegistry() {
