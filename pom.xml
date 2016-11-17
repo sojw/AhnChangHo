@@ -4,7 +4,7 @@
 	<groupId>sojw</groupId>
 	<artifactId>AhnChangHo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
+
 	<properties>
 		<maven.build.date>${maven.build.timestamp}</maven.build.date>
 		<maven.build.timestamp.format>yyyy_MMdd_HHmm</maven.build.timestamp.format>
@@ -35,10 +35,6 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
-			<resource>
-				<directory>src/main/resources-${environment}</directory>
-				<filtering>true</filtering>
-			</resource>
 		</resources>
 		<testResources>
 			<testResource>
@@ -53,42 +49,6 @@
 			</testResource>
 		</testResources>
 
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.codehaus.mojo
-										</groupId>
-										<artifactId>
-											build-helper-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.4,)
-										</versionRange>
-										<goals>
-											<goal>add-test-source</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -98,26 +58,26 @@
 					<encoding>${source-encoding}</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>3.0.0</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${webapp.directory}/WEB-INF/classes</directory>
-						</fileset>
-						<fileset>
-							<directory>${webapp.directory}/WEB-INF/lib</directory>
-						</fileset>
-						<fileset>
-							<directory>${deploy.dir}</directory>
-						</fileset>
-						<fileset>
-							<directory>${webapp.static.min}</directory>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <artifactId>maven-clean-plugin</artifactId> -->
+			<!-- <version>3.0.0</version> -->
+			<!-- <configuration> -->
+			<!-- <filesets> -->
+			<!-- <fileset> -->
+			<!-- <directory>${webapp.directory}/WEB-INF/classes</directory> -->
+			<!-- </fileset> -->
+			<!-- <fileset> -->
+			<!-- <directory>${webapp.directory}/WEB-INF/lib</directory> -->
+			<!-- </fileset> -->
+			<!-- <fileset> -->
+			<!-- <directory>${deploy.dir}</directory> -->
+			<!-- </fileset> -->
+			<!-- <fileset> -->
+			<!-- <directory>${webapp.static.min}</directory> -->
+			<!-- </fileset> -->
+			<!-- </filesets> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -162,20 +122,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<warSourceDirectory>${webapp.directory}</warSourceDirectory>
-					<webappDirectory>${deploy.dir}</webappDirectory>
-					<useCache>false</useCache>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-				</configuration>
-			</plugin>
+			<!-- <plugin> -->
+			<!-- <groupId>org.apache.maven.plugins</groupId> -->
+			<!-- <artifactId>maven-war-plugin</artifactId> -->
+			<!-- <version>2.6</version> -->
+			<!-- <configuration> -->
+			<!-- <warSourceDirectory>${webapp.directory}</warSourceDirectory> -->
+			<!-- <webappDirectory>${deploy.dir}</webappDirectory> -->
+			<!-- <useCache>false</useCache> -->
+			<!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
+			<!-- </configuration> -->
+			<!-- </plugin> -->
 		</plugins>
 	</build>
-	
+
 	<dependencies>
 		<!-- http://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
