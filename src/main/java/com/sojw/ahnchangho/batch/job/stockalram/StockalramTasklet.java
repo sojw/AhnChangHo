@@ -59,7 +59,7 @@ public class StockalramTasklet implements Tasklet {
 
 			saveLastAlramItem(now, news);
 			final String msg = msg(news);
-			LOG.debug("msq = {}", msg);
+			LOG.debug("msg = {}", msg);
 			sendLineMsq(msg);
 		} catch (Exception e) {
 			LOG.error("", e);
