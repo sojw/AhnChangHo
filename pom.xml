@@ -4,6 +4,7 @@
 	<groupId>sojw</groupId>
 	<artifactId>AhnChangHo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 
 	<properties>
 		<maven.build.date>${maven.build.timestamp}</maven.build.date>
@@ -18,12 +19,14 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+		<webapp.directory>${basedir}/src/main/webapp</webapp.directory>
 	</properties>
 
 	<build>
 		<finalName>${project.artifactId}-${project.version}</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
+		<outputDirectory>${webapp.directory}/WEB-INF/classes</outputDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -58,26 +61,23 @@
 					<encoding>${source-encoding}</encoding>
 				</configuration>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <artifactId>maven-clean-plugin</artifactId> -->
-			<!-- <version>3.0.0</version> -->
-			<!-- <configuration> -->
-			<!-- <filesets> -->
-			<!-- <fileset> -->
-			<!-- <directory>${webapp.directory}/WEB-INF/classes</directory> -->
-			<!-- </fileset> -->
-			<!-- <fileset> -->
-			<!-- <directory>${webapp.directory}/WEB-INF/lib</directory> -->
-			<!-- </fileset> -->
-			<!-- <fileset> -->
-			<!-- <directory>${deploy.dir}</directory> -->
-			<!-- </fileset> -->
-			<!-- <fileset> -->
-			<!-- <directory>${webapp.static.min}</directory> -->
-			<!-- </fileset> -->
-			<!-- </filesets> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${webapp.directory}/WEB-INF/classes</directory>
+						</fileset>
+						<fileset>
+							<directory>${webapp.directory}/WEB-INF/lib</directory>
+						</fileset>
+						<fileset>
+							<directory>${deploy.dir}</directory>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -122,21 +122,27 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- <plugin> -->
-			<!-- <groupId>org.apache.maven.plugins</groupId> -->
-			<!-- <artifactId>maven-war-plugin</artifactId> -->
-			<!-- <version>2.6</version> -->
-			<!-- <configuration> -->
-			<!-- <warSourceDirectory>${webapp.directory}</warSourceDirectory> -->
-			<!-- <webappDirectory>${deploy.dir}</webappDirectory> -->
-			<!-- <useCache>false</useCache> -->
-			<!-- <failOnMissingWebXml>false</failOnMissingWebXml> -->
-			<!-- </configuration> -->
-			<!-- </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<warSourceDirectory>${webapp.directory}</warSourceDirectory>
+					<webappDirectory>${deploy.dir}</webappDirectory>
+					<useCache>false</useCache>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.2.3</version>
+		</dependency>
 		<!-- http://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>

@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
 import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
-public class BatchTestExecutor extends TestApplicationContext {
+public class BatchExecutor extends TestApplicationContext {
 	private static final String FIRE_TIME_KEY = "schedule.scheduledFireTime";
 
 	@Autowired
@@ -32,7 +32,8 @@ public class BatchTestExecutor extends TestApplicationContext {
 	private JobLauncher syncJobLauncher;
 
 	@Test
-	public void test() throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	public void dividenStock()
+		throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		Job job = jobRegistry.getJob(DividenStockJobConfig.JOB_NAME);
 		JobExecution jobExec = syncJobLauncher.run(job, jobParameters());
 		makeLog(jobExec);
@@ -41,7 +42,8 @@ public class BatchTestExecutor extends TestApplicationContext {
 	}
 
 	@Test
-	public void run() throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+	public void stockalram()
+		throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
 		JobExecution jobExec = syncJobLauncher.run(job, jobParameters());
 		makeLog(jobExec);

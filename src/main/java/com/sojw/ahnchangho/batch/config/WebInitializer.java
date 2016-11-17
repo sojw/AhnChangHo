@@ -5,10 +5,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 import com.sojw.ahnchangho.core.config.RootContextConfig;
 
 /**
- * WebInitializer
- *
- * @author se.hyung@navercorp.com
- * @since 2016. 10. 18.
+ * The Class WebInitializer.
  */
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
