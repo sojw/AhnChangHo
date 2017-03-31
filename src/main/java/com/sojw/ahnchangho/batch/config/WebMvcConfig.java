@@ -13,14 +13,11 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.sojw.ahnchangho.RootPackageMarker;
 
-/**
- * The Class SpringMvcConfig.
- */
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackageClasses = RootPackageMarker.class, useDefaultFilters = false, includeFilters = {
 	@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class), @ComponentScan.Filter(type = FilterType.ANNOTATION, value = ControllerAdvice.class)})
-public class SpringMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig extends WebMvcConfigurerAdapter {
 	@Bean
 	public InternalResourceViewResolver internalResourceViewResolver() {
 		return new InternalResourceViewResolver() {

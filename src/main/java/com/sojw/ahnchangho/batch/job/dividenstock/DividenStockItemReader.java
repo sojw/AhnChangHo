@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.ItemReader;
@@ -47,7 +48,7 @@ public class DividenStockItemReader implements ItemReader<List<CompanyInfo>> {
 
 			LOG.info("Reader done.");
 			return companyInfoList;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			LOG.error("", e);
 			return Collections.emptyList();
 		}
@@ -61,12 +62,12 @@ public class DividenStockItemReader implements ItemReader<List<CompanyInfo>> {
 	 */
 	public List<CompanyInfo> companyInfo() throws IOException {
 		List<CompanyInfo> companyInfoList = Lists.newArrayList();
-		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
+		//		CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
 		try (Reader reader = resourceLoaderUtil.getReader("classpath:stock_code_raw.csv")) {
 			CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withHeader());
 			for (CSVRecord record : parser) {
-				String stockCode = record.get("종목코드");
-				String name = record.get("회사명");
+				String stockCode = StringUtils.trim(record.get("종목코드"));
+				String name = StringUtils.trim(record.get("회사명"));
 
 				//				LOG.debug("종목코드 = {}, 회사명 = {}", stockCode, name);
 				companyInfoList.add(new CompanyInfo(name, stockCode, ""));

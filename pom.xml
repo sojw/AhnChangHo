@@ -107,6 +107,9 @@
 					<optimize>true</optimize>
 					<showDeprecation>true</showDeprecation>
 					<verbose>true</verbose>
+                    <annotationProcessors>
+                        <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>
+                    </annotationProcessors>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -567,5 +570,13 @@
 			</exclusions>
 		</dependency>
 
+        <!-- Lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+        
 	</dependencies>
 </project>

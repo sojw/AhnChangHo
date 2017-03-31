@@ -26,12 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.sojw.ahnchangho.batch.BatchConstants;
 
-/**
- * JobController
- *
- * @author se.hyung@navercorp.com
- * @since 2016. 10. 18.
- */
+
 @Controller
 public class JobController {
 	private static final Logger LOG = LoggerFactory.getLogger(JobController.class);

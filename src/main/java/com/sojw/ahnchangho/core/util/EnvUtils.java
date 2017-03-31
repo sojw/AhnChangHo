@@ -1,9 +1,3 @@
-/*
- * @EnvUtil.java 2016. 7. 15.
- *
- * Copyright NAVER Corp. All rights Reserved. 
- * NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
 package com.sojw.ahnchangho.core.util;
 
 import java.util.HashMap;
@@ -11,14 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.sojw.ahnchangho.core.config.EnvPropertyConfig;
-
-/**
- * @author GD
- * @see EnvPropertyConfig
- */
 public class EnvUtils {
-	// spring container �뿉�꽌 二쇱엯 .
 	private static final Map<String, String> ENV_MAP = new HashMap<String, String>();
 
 	/**

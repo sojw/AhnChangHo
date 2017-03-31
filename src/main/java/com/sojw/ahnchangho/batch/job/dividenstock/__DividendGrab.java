@@ -1,4 +1,4 @@
-package com.sojw.ahnchangho;
+package com.sojw.ahnchangho.batch.job.dividenstock;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,24 +16,23 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.Test;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 
-public class Test1 {
+public class __DividendGrab {
 
-	@Test
-	public void test() throws IOException {
-		System.out.println("read file.");
+	/**
+	 * Grab.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	public void grab() throws IOException {
 		List<String> stockCodeList = readFile();
-//				stockCodeList = Lists.newArrayList("004800", "093190", "010660");
+		//		stockCodeList = Lists.newArrayList("004800", "093190", "010660");
 
-		System.out.println("get dividend.");
 		Map<String, Double> rank = Maps.newHashMap();
 		stockCodeList.forEach(stockCode -> {
-			System.out.println("stockCode = " + stockCode);
 			Document document = null;
 			try {
 				document = Jsoup.connect("http://companyinfo.stock.naver.com/v1/company/c1010001.aspx?cmp_cd=" + stockCode).get();
@@ -56,11 +55,14 @@ public class Test1 {
 				}
 			}
 		});
-		System.out.println("done.");
 
-		System.out.println("save file.");
 		saveData(rank);
-		System.out.println("done.");
+	}
+
+	private List<String> readFile() throws IOException {
+		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\stockcode.txt"), Charset.defaultCharset());
+		System.out.println("read stock code count : " + stockCodeList.size());
+		return stockCodeList;
 	}
 
 	private void saveData(Map<String, Double> rank) throws FileNotFoundException, IOException {
@@ -70,12 +72,6 @@ public class Test1 {
 			bufferedWriter.write("" + item.getKey() + ", " + item.getValue() + "\r\n");
 		}
 		bufferedWriter.close();
-	}
-
-	private List<String> readFile() throws IOException {
-		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\stockcode.txt"), Charset.defaultCharset());
-		System.out.println("read stock code count : " + stockCodeList.size());
-		return stockCodeList;
 	}
 
 	public Map<String, Double> sortByValue(Map<String, Double> unsortedMap) {
@@ -92,7 +88,7 @@ public class Test1 {
 		}
 
 		public int compare(Object keyA, Object keyB) {
-			if (map.get(keyA) >= map.get(keyB)) { //반�?�? ?���? ?��름차?�� <=
+			if (map.get(keyA) >= map.get(keyB)) { //반대로 하면 오름차순 <=
 				return -1;
 			} else {
 				return 1;

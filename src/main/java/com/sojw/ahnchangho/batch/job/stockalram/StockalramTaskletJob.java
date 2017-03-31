@@ -16,15 +16,15 @@ public class StockalramTaskletJob {
 	private static final String STEP_NAME = "stockalramTaskletStep";
 
 	@Bean
-	public TaskletStep sampleTaskletStep(StepBuilderFactory stepBuilderFactory) throws Exception {
-		return stepBuilderFactory.get(STEP_NAME).tasklet(sampleTasklet).build();
+	public TaskletStep stockalramTaskletStep(StepBuilderFactory stepBuilderFactory) throws Exception {
+		return stepBuilderFactory.get(STEP_NAME).tasklet(stockalramTasklet).build();
 	}
 
 	@Bean
-	public Job sampleTaskletJob(JobBuilderFactory jobBuilderFactory, TaskletStep sampleTaskletStep) throws Exception {
-		return jobBuilderFactory.get(JOB_NAME).start(sampleTaskletStep).build();
+	public Job stockalramTaskletJobBuild(JobBuilderFactory jobBuilderFactory, TaskletStep stockalramTaskletStep) throws Exception {
+		return jobBuilderFactory.get(JOB_NAME).start(stockalramTaskletStep).build();
 	}
 
 	@Autowired
-	private StockalramTasklet sampleTasklet;
+	private StockalramTasklet stockalramTasklet;
 }

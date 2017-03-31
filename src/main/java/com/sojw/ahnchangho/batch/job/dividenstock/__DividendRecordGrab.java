@@ -18,13 +18,10 @@ import org.jsoup.nodes.Element;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 
-/**
- * @author Naver
- *
- */
-public class DividendRecordGrab {
+
+public class __DividendRecordGrab {
 	public static void main(String[] args) throws IOException {
-		DividendRecordGrab obj = new DividendRecordGrab();
+		__DividendRecordGrab obj = new __DividendRecordGrab();
 		obj.grab();
 	}
 
@@ -41,7 +38,7 @@ public class DividendRecordGrab {
 		stockCodeList.parallelStream().forEach(stockCode -> {
 			Document document = null;
 			try {
-				document = Jsoup.connect("http://finance.daum.net/invest/dividend.daum?value=201512&shcode=" + stockCode).timeout(30000).get();
+				document = Jsoup.connect("http://finance.daum.net/invest/dividend.daum?shcode=" + stockCode).timeout(30000).get();
 			} catch (IOException e) {
 				System.out.println(e);
 			}
@@ -81,13 +78,13 @@ public class DividendRecordGrab {
 	}
 
 	private List<String> readFile() throws IOException {
-		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\stock_code_ver2.txt"), Charset.defaultCharset());
+		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\git\\AhnChangHo\\src\\main\\resources\\stock_code_ver2.txt"), Charset.defaultCharset());
 		System.out.println("read stock code count : " + stockCodeList.size());
 		return stockCodeList;
 	}
 
 	private void saveData(Map<String, String> rank) throws FileNotFoundException, IOException {
-		BufferedWriter bufferedWriter = Files.newWriter(new File("C:\\Users\\Naver\\Desktop\\dividend_record.txt"), Charset.defaultCharset());
+		BufferedWriter bufferedWriter = Files.newWriter(new File("C:\\Users\\Naver\\Desktop\\dividend_rank\\dividend_record.txt"), Charset.defaultCharset());
 		bufferedWriter.write("종목코드 , 회사명, 배당기록 \r\n");
 		for (Map.Entry<String, String> item : rank.entrySet()) {
 			bufferedWriter.write("" + item.getKey() + ", " + item.getValue() + "\r\n");

@@ -20,10 +20,7 @@ import org.jsoup.select.Elements;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 
-/**
- * @author Naver
- *
- */
+
 public class DividendHistoryGrab {
 	public static void main(String[] args) throws IOException {
 		DividendHistoryGrab obj = new DividendHistoryGrab();
@@ -43,9 +40,9 @@ public class DividendHistoryGrab {
 		stockCodeList.parallelStream().forEach(stockCode -> {
 			Document document = null;
 			try {
-				document = Jsoup.connect("http://kind.krx.co.kr/disclosureinfo/dividendinfo.do").timeout(10000).header("Content-Type", "application/x-www-form-urlencoded").data(
+				document = Jsoup.connect("http://kind.krx.co.kr/disclosureinfo/dividendinfo.do").timeout(3000).header("Content-Type", "application/x-www-form-urlencoded").data(
 					"method", "searchDividendInfoSub").data("orderMode", "0").data("orderStat", "A").data("searchCodeType", "char").data("repIsuSrtCd", "A" + stockCode).data(
-						"forward", "dividendinfo_sub").data("selYear", "2015").data("selYearCnt", "3").data("searchCorpName", stockCode).data("searchCorpNameTmp",
+						"forward", "dividendinfo_sub").data("selYear", "2016").data("selYearCnt", "3").data("searchCorpName", stockCode).data("searchCorpNameTmp",
 							stockCode).post();
 			} catch (IOException e) {
 				System.out.println(e);
@@ -95,13 +92,13 @@ public class DividendHistoryGrab {
 	}
 
 	private List<String> readFile() throws IOException {
-		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\stock_code_ver2.txt"), Charset.defaultCharset());
+		List<String> stockCodeList = Files.readLines(new File("C:\\Users\\Naver\\Desktop\\dividend_rank\\stock_code_ver2.txt"), Charset.defaultCharset());
 		System.out.println("read stock code count : " + stockCodeList.size());
 		return stockCodeList;
 	}
 
 	private void saveData(Map<String, String> rank) throws FileNotFoundException, IOException {
-		BufferedWriter bufferedWriter = Files.newWriter(new File("C:\\Users\\Naver\\Desktop\\dividend_history.txt"), Charset.defaultCharset());
+		BufferedWriter bufferedWriter = Files.newWriter(new File("C:\\Users\\Naver\\Desktop\\dividend_rank\\dividend_history.txt"), Charset.defaultCharset());
 		for (Map.Entry<String, String> item : rank.entrySet()) {
 			bufferedWriter.write("" + item.getKey() + ", " + item.getValue() + "\r\n");
 		}

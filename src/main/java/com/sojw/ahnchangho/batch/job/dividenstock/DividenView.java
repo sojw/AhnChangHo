@@ -1,5 +1,8 @@
 package com.sojw.ahnchangho.batch.job.dividenstock;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+
 /**
  * The Class DividenView.
  */
@@ -40,10 +43,10 @@ public class DividenView {
 	public String getStockName() {
 		return stockName;
 	}
-	
+
 	public String getStockNameHtml() {
-		if(improveFinanceGrade < 3) {
-			return "<font color='red'>" + stockName + "</font>";	
+		if (improveFinanceGrade < 3) {
+			return "<font color='red'>" + stockName + "</font>";
 		}
 		return stockName;
 	}
@@ -54,6 +57,11 @@ public class DividenView {
 
 	public String getRate() {
 		return rate;
+	}
+
+	public String getRateHtml() {
+		final Double filterdRate = NumberUtils.toDouble(StringUtils.remove(this.rate, "%"));
+		return (filterdRate > 0) ? "<font color='red'>" + filterdRate + "</font>" : "<font color='blue'>" + filterdRate + "</font>";
 	}
 
 	public void setRate(String rate) {

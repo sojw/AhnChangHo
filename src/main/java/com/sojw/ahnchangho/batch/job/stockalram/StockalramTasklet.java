@@ -33,10 +33,10 @@ import com.sojw.ahnchangho.batch.job.stockalram.SearchResult.ListItem;
 @Component
 public class StockalramTasklet implements Tasklet {
 	private static final Logger LOG = LoggerFactory.getLogger(StockalramTasklet.class);
-	private static final String API_URL = "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=50&start_dt=%s";
-	private static final String API_KEY = "62d77fc171e7f887beac19fc86b4d20df1337be3";
+	private static final String DART_API_URL = "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=50&start_dt=%s&dsp_tp=A&dsp_tp=B&dsp_tp=D&dsp_tp=F&dsp_tp=I&dsp_tp=J";
+	private static final String DART_API_KEY = "62d77fc171e7f887beac19fc86b4d20df1337be3";
 	private static final String LINE_API_KEY = "dIX1BrjfvA48pXpSTgCMk1ieaBz9mQOTqCUOCOqndw8";
-	private static final String SAVE_FILE_FORMATT = "C:\\Users\\Naver\\Desktop\\dividend_rank\\stock_alram_%s-%s-%s.txt";
+	private static final String SAVE_FILE_FORMATT = "C:\\Users\\Naver\\Desktop\\stock_alram\\stock_alram_%s-%s-%s.txt";
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -48,7 +48,7 @@ public class StockalramTasklet implements Tasklet {
 		LOG.debug("date = {}", date);
 
 		try {
-			final SearchResult result = restTemplate.getForObject(String.format(API_URL, API_KEY, date), SearchResult.class);
+			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, DART_API_KEY, date), SearchResult.class);
 			if (!StringUtils.equalsIgnoreCase(result.getErrCode(), "000") || CollectionUtils.isEmpty(result.getList())) {
 				LOG.error("error!!!", result);
 				return RepeatStatus.FINISHED;

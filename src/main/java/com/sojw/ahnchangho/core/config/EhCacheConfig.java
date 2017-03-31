@@ -1,9 +1,3 @@
-/* 
-* EhCacheConfig.java 2016. 8. 11. 
-* 
-* Copyright 2016 NAVER Corp. All rights Reserved. 
-* NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
-*/
 package com.sojw.ahnchangho.core.config;
 
 import org.slf4j.Logger;

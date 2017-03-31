@@ -1,10 +1,3 @@
-/*
- * @(#)JsonUtils.java $version 2014. 8. 15.
- *
- * Copyright 2007 NHN Corp. All rights Reserved. 
- * NHN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
-
 package com.sojw.ahnchangho.core.util;
 
 import java.io.StringWriter;
@@ -17,13 +10,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-/**
- * Some basic utilities for processing JSON. This class depends on Jackson.
- * 
- * 출처: https://code.google.com/p/unsuck/
- * 
- * @author Schnitzer, Jeff Lee
- */
 public class JsonUtils {
 	private static final Logger LOG = LoggerFactory.getLogger(JsonUtils.class);
 	public static final String JSON_EXTENSION = ".json";

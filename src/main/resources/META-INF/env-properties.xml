@@ -9,5 +9,6 @@ http://www.springframework.org/schema/util http://www.springframework.org/schema
         <prop key="httpConnectTimeout">50000</prop>
         <prop key="httpSocketLongTimeout">100000</prop>
         <prop key="httpConnectLongTimeout">100000</prop>
+        <prop key="outputPath">C:\\Users\\Naver\\Desktop\\dividend_rank\\</prop>
     </util:properties>
 </beans>

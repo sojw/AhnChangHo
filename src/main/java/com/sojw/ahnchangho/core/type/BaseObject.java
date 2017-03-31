@@ -1,10 +1,3 @@
-/*
- * @(#)BaseObject.java $version 2016. 6. 2.
- *
- * Copyright 2007 NHN Corp. All rights Reserved. 
- * NHN PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
-
 package com.sojw.ahnchangho.core.type;
 
 import java.io.Serializable;

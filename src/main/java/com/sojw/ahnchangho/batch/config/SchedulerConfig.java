@@ -20,8 +20,8 @@ import com.sojw.ahnchangho.batch.BatchConstants;
 import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
 @Component
-public class Scheduler {
-	private static final Logger LOG = LoggerFactory.getLogger(Scheduler.class);
+public class SchedulerConfig {
+	private static final Logger LOG = LoggerFactory.getLogger(SchedulerConfig.class);
 	@Autowired
 	private JobRegistry jobRegistry;
 
@@ -29,47 +29,49 @@ public class Scheduler {
 	@Qualifier("simpleJobLauncher")
 	private JobLauncher jobLauncher;
 
-	@Scheduled(cron = "* * * * * *")
-	public void cronTest1() {
-		LOG.info("매초 호출이 됩니다 ");
-	}
+	//	@Scheduled(cron = "* * * * * *")
+	//	public void cronTest1() {
+	//		LOG.info("매초 호출이 됩니다 ");
+	//	}
 
-	@Scheduled(cron = "0 * * * * *")
-	public void cronTest2() {
-		LOG.info("매분 호출이 됩니다 ");
+	//	@Scheduled(cron = "0 * * * * *")
+	//	public void cronTest2() {
+	//		LOG.info("매분 호출이 됩니다 ");
+	//	}
 
-		try {
-			Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
-			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
-			String result = makeLog(jobExec);
-			LOG.info("result = {}", result);
-		} catch (Exception e) {
-			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
-		}
-	}
+//	@Scheduled(cron = "0 * 09-17 * * *")
+//	public void stockalramTaskletJob() {
+//		LOG.info("stockalramTaskletJob start.");
+//
+//		try {
+//			Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
+//			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
+//			String result = makeLog(jobExec);
+//			LOG.info("result = {}", result);
+//		} catch (Exception e) {
+//			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
+//		}
+//
+//		LOG.info("stockalramTaskletJob end.");
+//	}
 
-	@Scheduled(cron = "0 30-59 15-17 * * *")
-	public void stockalramTaskletJob() {
-		LOG.info("stockalramTaskletJob start.");
-
-		try {
-			Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
-			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
-			String result = makeLog(jobExec);
-			LOG.info("result = {}", result);
-		} catch (Exception e) {
-			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
-		}
-
-		LOG.info("stockalramTaskletJob end.");
-	}
-
+	/**
+	 * Gets the job parameters.
+	 *
+	 * @return the job parameters
+	 */
 	private JobParameters getJobParameters() {
 		JobParametersBuilder builder = new JobParametersBuilder();
 		builder.addLong(BatchConstants.FIRE_TIME_KEY, (new Date()).getTime());
 		return builder.toJobParameters();
 	}
 
+	/**
+	 * Make log.
+	 *
+	 * @param jobExec the job exec
+	 * @return the string
+	 */
 	private String makeLog(JobExecution jobExec) {
 		StringBuilder log = new StringBuilder();
 		log.append("Job Execution finished");
