@@ -12,18 +12,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
+import com.sojw.ahnchangho.batch.job.dividenstock.DividendRecordSearchTaskletJob;
+import com.sojw.ahnchangho.batch.job.pricesearch.PriceSearchTaskletJob;
+import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
-/**
- * SpringBatchConfig
- *
- * @author se.hyung@navercorp.com
- * @since 2016. 10. 18.
- *
- * job이 추가될 때 클래스를 job 설정 클래스를 Import 해야함.
- */
 @Configuration
 @ComponentScan(basePackages = "com.sojw.ahnchangho.batch.job")
-@Import({DividenStockJobConfig.class})
+@Import({DividenStockJobConfig.class, StockalramTaskletJob.class, PriceSearchTaskletJob.class, DividendRecordSearchTaskletJob.class})
 public class SpringBatchConfig {
 	@Bean
 	public JobRegistry jobRegistry() {

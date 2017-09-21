@@ -1,10 +1,3 @@
-/*
- *
- * TestApplicationContext.java 2016-06-10
- *
- * Copyright NAVER Corp. All rights Reserved.
- * NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
 package com.sojw.ahnchangho;
 
 import org.junit.After;

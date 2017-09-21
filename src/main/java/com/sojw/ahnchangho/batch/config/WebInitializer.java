@@ -4,12 +4,6 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.sojw.ahnchangho.core.config.RootContextConfig;
 
-/**
- * WebInitializer
- *
- * @author se.hyung@navercorp.com
- * @since 2016. 10. 18.
- */
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
@@ -18,7 +12,7 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class[] {SpringMvcConfig.class};
+		return new Class[] {WebMvcConfig.class};
 	}
 
 	@Override

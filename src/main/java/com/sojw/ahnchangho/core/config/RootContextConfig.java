@@ -1,9 +1,3 @@
-/* 
-* RootContextConfig.java 2016. 8. 11. 
-* 
-* Copyright 2016 NAVER Corp. All rights Reserved. 
-* NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms. 
-*/
 package com.sojw.ahnchangho.core.config;
 
 import java.io.BufferedReader;
@@ -28,15 +22,18 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.mustachejava.DefaultMustacheFactory;
+import com.github.mustachejava.MustacheFactory;
 import com.sojw.ahnchangho.RootPackageMarker;
 import com.sojw.ahnchangho.core.util.ObjectMapperFactory;
 
 @Configuration
+@EnableScheduling
 @ComponentScan(basePackageClasses = RootPackageMarker.class, useDefaultFilters = true, excludeFilters = {
 	@ComponentScan.Filter(type = FilterType.ANNOTATION, value = Controller.class), @ComponentScan.Filter(type = FilterType.ANNOTATION, value = Configuration.class)})
 @Import({HttpClientConfig.class, EhCacheConfig.class, MessageConfig.class, EnvPropertyConfig.class, SpringRetryConfig.class, MustacheConfig.class})
@@ -91,6 +88,17 @@ public class RootContextConfig implements ResourceLoaderAware {
 	}
 
 	/**
+	 * Mustache factory.
+	 *
+	 * @return the mustache factory
+	 */
+	@Bean
+	public MustacheFactory mustacheFactory() {
+		DefaultMustacheFactory defaultMustacheFactory = new DefaultMustacheFactory();
+		return defaultMustacheFactory;
+	}
+
+	/**
 	 * Validator factory.
 	 *
 	 * @param messageSource the message source
@@ -104,18 +112,18 @@ public class RootContextConfig implements ResourceLoaderAware {
 		return factory;
 	}
 
-	/**
-	 * Validation post processor.
-	 *
-	 * @param validator the validator
-	 * @return the method validation post processor
-	 */
-	@Bean
-	public MethodValidationPostProcessor validationPostProcessor(Validator validator) {
-		MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
-		processor.setValidator(validator);
-		return processor;
-	}
+	//	/**
+	//	 * Validation post processor.
+	//	 *
+	//	 * @param validator the validator
+	//	 * @return the method validation post processor
+	//	 */
+	//	@Bean
+	//	public MethodValidationPostProcessor validationPostProcessor(Validator validator) {
+	//		MethodValidationPostProcessor processor = new MethodValidationPostProcessor();
+	//		processor.setValidator(validator);
+	//		return processor;
+	//	}
 
 	/**
 	 * Property config in dev.
@@ -143,4 +151,14 @@ public class RootContextConfig implements ResourceLoaderAware {
 		CompositeCacheManager compositeCacheManager = new CompositeCacheManager(ehCacheCacheManager);
 		return compositeCacheManager;
 	}
+
+	//	@Bean
+	//	public ThreadPoolTaskExecutor taskExecutor() {
+	//		ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
+	//		threadPoolTaskExecutor.setCorePoolSize(10);
+	//		threadPoolTaskExecutor.setMaxPoolSize(20);
+	//		threadPoolTaskExecutor.setQueueCapacity(5);
+	//
+	//		return threadPoolTaskExecutor;
+	//	}
 }

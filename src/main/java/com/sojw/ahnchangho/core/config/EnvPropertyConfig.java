@@ -1,10 +1,3 @@
-/*
- * @EnvPropertyConfig.java 2016. 7. 15.
- *
- * Copyright NAVER Corp. All rights Reserved. 
- * NAVER PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- */
-
 package com.sojw.ahnchangho.core.config;
 
 import java.util.Map;
@@ -17,10 +10,6 @@ import org.springframework.context.annotation.ImportResource;
 
 import com.sojw.ahnchangho.core.util.EnvUtils;
 
-/**
- * @author GD
- * 
- */
 @Configuration
 @ImportResource("classpath:META-INF/env-properties.xml")
 public class EnvPropertyConfig {
