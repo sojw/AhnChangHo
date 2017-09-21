@@ -1,2 +1,22 @@
-/target/
-/bin/
+*.class
+# Eclipse
+.classpath
+.project
+.settings/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
+.DS_Store
+
+# Maven
+**/target/
+deploy
+classes/
+*.releaseBackup
+release.properties
+mvnw.cmd
+mvnw
