@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.sojw.ahnchangho.batch.BatchConstants;
+import com.sojw.ahnchangho.batch.job.srtalram.SrtalramTaskletJob;
 import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
 @Component
@@ -39,21 +40,37 @@ public class SchedulerConfig {
 	//		LOG.info("매분 호출이 됩니다 ");
 	//	}
 
-//	@Scheduled(cron = "0 * 09-17 * * *")
-//	public void stockalramTaskletJob() {
-//		LOG.info("stockalramTaskletJob start.");
-//
-//		try {
-//			Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
-//			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
-//			String result = makeLog(jobExec);
-//			LOG.info("result = {}", result);
-//		} catch (Exception e) {
-//			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
-//		}
-//
-//		LOG.info("stockalramTaskletJob end.");
-//	}
+	//	@Scheduled(cron = "0 * 09-17 * * *")
+	//	public void stockalramTaskletJob() {
+	//		LOG.info("stockalramTaskletJob start.");
+	//
+	//		try {
+	//			Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
+	//			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
+	//			String result = makeLog(jobExec);
+	//			LOG.info("result = {}", result);
+	//		} catch (Exception e) {
+	//			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
+	//		}
+	//
+	//		LOG.info("stockalramTaskletJob end.");
+	//	}
+
+	@Scheduled(cron = "0/3 * * * * *")
+	public void srtalramTaskletJob() {
+		LOG.info("SrtalramTaskletJob start.");
+
+		try {
+			Job job = jobRegistry.getJob(SrtalramTaskletJob.JOB_NAME);
+			JobExecution jobExec = jobLauncher.run(job, getJobParameters());
+			String result = makeLog(jobExec);
+			LOG.info("result = {}", result);
+		} catch (Exception e) {
+			LOG.error("jobLaunch error jobName = {}", StockalramTaskletJob.JOB_NAME, e);
+		}
+
+		LOG.info("stockalramTaskletJob end.");
+	}
 
 	/**
 	 * Gets the job parameters.

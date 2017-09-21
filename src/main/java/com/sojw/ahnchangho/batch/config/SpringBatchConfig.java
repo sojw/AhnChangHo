@@ -14,11 +14,12 @@ import org.springframework.context.annotation.Import;
 import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
 import com.sojw.ahnchangho.batch.job.dividenstock.DividendRecordSearchTaskletJob;
 import com.sojw.ahnchangho.batch.job.pricesearch.PriceSearchTaskletJob;
+import com.sojw.ahnchangho.batch.job.srtalram.SrtalramTaskletJob;
 import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
 @Configuration
 @ComponentScan(basePackages = "com.sojw.ahnchangho.batch.job")
-@Import({DividenStockJobConfig.class, StockalramTaskletJob.class, PriceSearchTaskletJob.class, DividendRecordSearchTaskletJob.class})
+@Import({DividenStockJobConfig.class, StockalramTaskletJob.class, PriceSearchTaskletJob.class, DividendRecordSearchTaskletJob.class, SrtalramTaskletJob.class})
 public class SpringBatchConfig {
 	@Bean
 	public JobRegistry jobRegistry() {

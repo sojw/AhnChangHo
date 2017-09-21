@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import com.sojw.ahnchangho.batch.job.dividenstock.DividenStockJobConfig;
 import com.sojw.ahnchangho.batch.job.dividenstock.DividendRecordSearchTaskletJob;
 import com.sojw.ahnchangho.batch.job.pricesearch.PriceSearchTaskletJob;
+import com.sojw.ahnchangho.batch.job.srtalram.SrtalramTaskletJob;
 import com.sojw.ahnchangho.batch.job.stockalram.StockalramTaskletJob;
 
 public class BatchExecutor extends TestApplicationContext {
@@ -57,6 +58,16 @@ public class BatchExecutor extends TestApplicationContext {
 	public void stockalram()
 		throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
 		Job job = jobRegistry.getJob(StockalramTaskletJob.JOB_NAME);
+		JobExecution jobExec = syncJobLauncher.run(job, jobParameters());
+		makeLog(jobExec);
+
+		LOG.debug("application context load done.");
+	}
+
+	@Test
+	public void srtalram()
+		throws NoSuchJobException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
+		Job job = jobRegistry.getJob(SrtalramTaskletJob.JOB_NAME);
 		JobExecution jobExec = syncJobLauncher.run(job, jobParameters());
 		makeLog(jobExec);
 
