@@ -33,9 +33,13 @@ public class HttpClientConfig {
 	 */
 	@Bean
 	public RestTemplate restTemplate() {
+		HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory(httpClient());
+		httpComponentsClientHttpRequestFactory.setConnectTimeout(2000);
+		httpComponentsClientHttpRequestFactory.setReadTimeout(2000);
+
 		return new RestTemplate() {
 			{
-				setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient()));
+				setRequestFactory(httpComponentsClientHttpRequestFactory);
 				getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 			}
 		};

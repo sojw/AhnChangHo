@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.sojw.ahnchangho.batch.job.listener.JobDuplicationListener;
+import com.sojw.ahnchangho.batch.job.JobDuplicationListener;
 
 @Controller
 public class HomeController {

@@ -1,4 +1,4 @@
-package com.sojw.ahnchangho.batch.job.listener;
+package com.sojw.ahnchangho.batch.job;
 
 import java.util.Map;
 import java.util.StringJoiner;

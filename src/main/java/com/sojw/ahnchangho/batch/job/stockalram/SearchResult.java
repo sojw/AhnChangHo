@@ -98,5 +98,9 @@ public class SearchResult extends BaseObject {
 		public String getRmk() {
 			return rmk;
 		}
+
+		public void setRptNm(String rptNm) {
+			this.rptNm = rptNm;
+		}
 	}
 }

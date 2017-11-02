@@ -4,6 +4,7 @@ import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor;
 import org.springframework.batch.core.configuration.support.MapJobRegistry;
 import org.springframework.batch.core.launch.support.SimpleJobLauncher;
+import org.springframework.batch.core.listener.ExecutionContextPromotionListener;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -63,4 +64,14 @@ public class SpringBatchConfig {
 	//		fb.setTransactionManager(batchTransactionManager);
 	//		return fb.getObject();
 	//	}
+
+	@Bean
+	public ExecutionContextPromotionListener promotionListener() {
+		ExecutionContextPromotionListener executionContextPromotionListener = new ExecutionContextPromotionListener();
+
+		// 데이터 공유를 위해 사용될 key값을 미리 빈에 등록해주어야 합니다.
+		executionContextPromotionListener.setKeys(new String[] {"SPECIFIC_MEMBER"});
+
+		return executionContextPromotionListener;
+	}
 }
