@@ -139,7 +139,10 @@ public class StockalramTasklet implements Tasklet {
 		List<ListItem> news = Lists.newArrayList();
 		for (ListItem item : result.getList()) {
 			List<String> alramJoin = Lists.newArrayList(item.getCrpNm(), item.getCrpCd(), item.getRptNm(), item.getRcpNo());
-			if (StringUtils.equalsIgnoreCase(StringUtils.join(alramJoin, NEWS_DELIMITER), lastAlramItem)) {
+			//			if (StringUtils.equalsIgnoreCase(StringUtils.join(alramJoin, NEWS_DELIMITER), lastAlramItem)) {
+			//				break;
+			//			}
+			if (StringUtils.equalsIgnoreCase(item.getRcpNo(), lastAlramItem)) {
 				break;
 			}
 
@@ -243,6 +246,8 @@ public class StockalramTasklet implements Tasklet {
 		final List<String> alramJoin = Lists.newArrayList(item.getCrpNm(), item.getCrpCd(), item.getRptNm(), item.getRcpNo());
 		final File saveLastAlram = new File(String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
 		Files.write(StringUtils.join(alramJoin, NEWS_DELIMITER), saveLastAlram, Charset.defaultCharset());
+
+		Files.write(item.getRcpNo(), saveLastAlram, Charset.defaultCharset());
 	}
 
 	/**
