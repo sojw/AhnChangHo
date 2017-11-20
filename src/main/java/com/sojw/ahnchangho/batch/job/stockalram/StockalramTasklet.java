@@ -46,7 +46,7 @@ public class StockalramTasklet implements Tasklet {
 	private static final String SAVE_FILE_FORMATT = FileUtils.currentRelativeRootPath() + System.getProperties().getProperty("file.separator") + "stock_alram_%s-%s-%s.txt";
 
 	private static final List<String> FIND_KEYWORD_LIST = Lists.newArrayList("유상증자결정", "공급계약체결", "단일판매ㆍ공급계약체결", "특수관계인의유상증자참여", "유상증자참여", "최대주주변경을수반하는주식양수도계약체결", "영업(잠정)실적(공정공시)",
-		"연결재무제표기준영업(잠정)실적(공정공시)", "실적", "제3자배정", "배당", "자기주식취득");
+		"연결재무제표기준영업(잠정)실적(공정공시)", "실적", "제3자배정", "배당");
 
 	private static final List<String> EXCLUDE_KEYWORD_LIST = Lists.newArrayList("기재정정", "종속회사의주요경영사항", "결산실적공시예고", "자회사의 주요경영사항", "자회사의주요경영사항", "증권발행실적보고서", "증권발행결과");
 
