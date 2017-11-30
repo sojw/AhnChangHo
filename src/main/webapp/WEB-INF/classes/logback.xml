@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds" debug="true">
 
-    <!-- 외부 설정파일을 사용할 수 있다. -->
-    <property resource="build.properties"/>
-    
+	<!-- 외부 설정파일을 사용할 수 있다. -->
+	<property resource="build.properties" />
+
 	<property name="FILE_LOG_ROOT" value="." />
 
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -20,10 +20,9 @@
 	<!-- 파일이 하루에 한개씩 생성된다 -->
 	<!-- <fileNamePattern>sujemall-webapp.%d{yyyy-MM-dd}.log</fileNamePattern> -->
 
-	<!-- maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다. 위 설정데로 라면 30일이 지난 
-		파일은 -->
+	<!-- maxHIstory 설정은 위 부분에 롤링 정책에 따라 적용되 된다고 보면된다. 위 설정데로 라면 30일이 지난 파일은 -->
 	<!-- 삭제가 된다. -->
-	
+
 	<!-- <maxHistory>30</maxHistory> -->
 	<!-- </rollingPolicy> -->
 
@@ -49,20 +48,19 @@
 			<!-- 설정파일에 RUN_MODE 가 SERVICE로 정의되어 있으면 로깅 레벨을 INFO로 지정 -->
 			<root level="info">
 				<appender-ref ref="CONSOLE" />
-<!-- 				<appender-ref ref="FILE" /> -->
+				<!-- <appender-ref ref="FILE" /> -->
 			</root>
 		</then>
 		<!-- 설정파일에 RUN_MODE 가 SERVICE로 정의되어 있지 않으면 로깅 레벨을 DEBUG 지정 -->
 		<else>
 			<root level="debug">
 				<appender-ref ref="CONSOLE" />
-<!-- 				<appender-ref ref="FILE" /> -->
 			</root>
 		</else>
 	</if>
-	
-<!-- 	<root level="debug"> -->
-<!-- 		<appender-ref ref="CONSOLE" /> -->
-<!-- 	</root> -->
+
+	<root level="debug">
+		<appender-ref ref="CONSOLE" />
+	</root>
 
 </configuration>
