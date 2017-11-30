@@ -32,4 +32,7 @@ mvnw.cmd
 mvnw
 .settings/
 **/WEB-INF/
+src/main/webapp/WEB-INF
+src/main/webapp/WEB-INF/classes
+.project
 
