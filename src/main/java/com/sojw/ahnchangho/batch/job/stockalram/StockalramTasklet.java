@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
@@ -42,6 +43,7 @@ public class StockalramTasklet implements Tasklet {
 
 	private static final String DART_API_URL = "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=100&start_dt=%s";
 	private static final String DART_API_KEY = "62d77fc171e7f887beac19fc86b4d20df1337be3";
+	private static final List<String> DART_API_KEY_LIST = Lists.newArrayList("62d77fc171e7f887beac19fc86b4d20df1337be3", "e69ccf51150b4951b8c576c467e7d35e2a538b11");
 
 	private static final String SAVE_FILE_FORMATT = FileUtils.currentRelativeRootPath() + System.getProperties().getProperty("file.separator") + "stock_alram_%s-%s-%s.txt";
 
@@ -70,7 +72,9 @@ public class StockalramTasklet implements Tasklet {
 		log.debug("date = {}", date);
 
 		try {
-			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, DART_API_KEY, date), SearchResult.class);
+			//			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, DART_API_KEY, date), SearchResult.class);
+			String apiKey = DART_API_KEY_LIST.get(RandomUtils.nextInt(0, 2));
+			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, apiKey, date), SearchResult.class);
 			if (!StringUtils.equalsIgnoreCase(result.getErrCode(), "000")) {
 				log.error("error!!! result = {}", result);
 				return RepeatStatus.FINISHED;

@@ -40,7 +40,7 @@ public class SchedulerConfig {
 	//		LOG.info("매분 호출이 됩니다 ");
 	//	}
 
-	@Scheduled(cron = "*/7 * * * * *")
+	@Scheduled(cron = "*/5 * 08-20 * * *")
 	public void stockalramTaskletJob() {
 		LOG.info("stockalramTaskletJob start.");
 
