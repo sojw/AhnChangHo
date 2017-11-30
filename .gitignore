@@ -31,5 +31,5 @@ release.properties
 mvnw.cmd
 mvnw
 .settings/
-src/main/webapp/WEB-INF/
+**/WEB-INF/
 
