@@ -30,3 +30,6 @@ classes/
 release.properties
 mvnw.cmd
 mvnw
+.settings/
+src/main/webapp/WEB-INF/
+
