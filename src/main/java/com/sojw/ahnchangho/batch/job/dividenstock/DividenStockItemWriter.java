@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -45,7 +45,7 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	private static final String STOCK_PRICE = "http://finance.naver.com/item/sise.nhn?code=";
 	private static final String FINANCE_INFO = "http://companyinfo.stock.naver.com/v1/company/ajax/cF1001.aspx?fin_typ=0&freq_typ=Q&cmp_cd=";
 
-	private static final String[] DIVIDEN_RECORD_HEADER_MAPPING = {"종목코드", "회사명", "배당기록"};
+	private static final String[] DIVIDEN_RECORD_HEADER_MAPPING = { "종목코드", "회사명", "배당기록" };
 	private static final String SAVE_FILE_FORMATT = "C:\\Users\\Naver\\Desktop\\dividend_rank\\dividend_rank_%s-%s-%s.txt";
 	private static final String SAVE_HTML_FORMATT = "C:\\Users\\Naver\\Desktop\\dividend_rank\\dividend_rank_%s-%s-%s.html";
 	private static final String DATA_ROW_FORMATT = "%s | %s / %s % | %f % | %s \r\n\r\n";
@@ -65,12 +65,14 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 
 		LOG.info("Writer start.");
 		final List<CompanyInfo> companyInfo = dividendRecord();
-		final Map<String, String> dividenRecordMap = companyInfo.stream().collect(Collectors.toMap(CompanyInfo::getStockCode, CompanyInfo::getDividenRecord));
+		final Map<String, String> dividenRecordMap = companyInfo.stream()
+				.collect(Collectors.toMap(CompanyInfo::getStockCode, CompanyInfo::getDividenRecord));
 
 		final Map<String, Double> sortedMap = items.get(0);
 
 		LocalDate now = LocalDate.now();
-		File saveFile = new File(String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
+		File saveFile = new File(
+				String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
 		List<DividenView> dividenViewList = Lists.newArrayList();
 
 		try (BufferedWriter bufferedWriter = Files.newWriter(saveFile, Charset.defaultCharset())) {
@@ -83,8 +85,9 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 				final String dividenRecord = dividenRecordMap.getOrDefault(stockCode, StringUtils.EMPTY);
 
 				// 우선주가 아닌, 이전 배당 기록이 없는 회사는 제외.
-				if (Strings.isNullOrEmpty(dividenRecord)
-					&& !(StringUtils.contains(item.getKey(), "우") && NumberUtils.toInt(StringUtils.right(item.getKey(), 2).replace(")", StringUtils.EMPTY)) % 2 == 1)) {
+				if (Strings.isNullOrEmpty(dividenRecord) && !(StringUtils.contains(item.getKey(), "우")
+						&& NumberUtils.toInt(StringUtils.right(item.getKey(), 2).replace(")", StringUtils.EMPTY))
+								% 2 == 1)) {
 					continue;
 				}
 
@@ -93,8 +96,10 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 				}
 
 				final PriceInfo priceInfo = todayPriceInfo(stockCode);
-				bufferedWriter.write(item.getKey() + " | " + priceInfo.getNowVal() + " / " + priceInfo.getRate() + "% | " + item.getValue() + " % | " + dividenRecord + "\r\n\r\n");
-				//				bufferedWriter.write(String.format(DATA_ROW_FORMATT, item.getKey(), priceInfo.getNowVal(), priceInfo.getRate(), item.getValue(), dividenRecord));
+				bufferedWriter.write(item.getKey() + " | " + priceInfo.getNowVal() + " / " + priceInfo.getRate()
+						+ "% | " + item.getValue() + " % | " + dividenRecord + "\r\n\r\n");
+				// bufferedWriter.write(String.format(DATA_ROW_FORMATT, item.getKey(),
+				// priceInfo.getNowVal(), priceInfo.getRate(), item.getValue(), dividenRecord));
 				final FinanceInfo financeInfo = financeInfo(stockCode);
 
 				Integer improveFinancePoint = improveFinancePoint(financeInfo);
@@ -120,7 +125,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 		scopes.put("dividenViewList", dividenViewList);
 
 		final String html = render(scopes);
-		File saveHtml = new File(String.format(SAVE_HTML_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
+		File saveHtml = new File(
+				String.format(SAVE_HTML_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
 		Files.write(html, saveHtml, Charset.defaultCharset());
 
 		LOG.info("Writer done.");
@@ -129,7 +135,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	/**
 	 * Improve finance grade.
 	 *
-	 * @param improveFinancePoint the improve finance point
+	 * @param improveFinancePoint
+	 *            the improve finance point
 	 * @return the integer
 	 */
 	private Integer improveFinanceGrade(final Integer improveFinancePoint) {
@@ -157,74 +164,75 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	/**
 	 * Improve finance point.
 	 *
-	 * @param financeInfo the finance info
+	 * @param financeInfo
+	 *            the finance info
 	 * @return the integer
 	 */
 	private Integer improveFinancePoint(final FinanceInfo financeInfo) {
 		Integer improveFinancePoint = 0;
 
 		switch (financeInfo.getImproveSales()) {
-			case MORE_FORWARD:
+		case MORE_FORWARD:
 
-				break;
-			case FORWARD:
-				improveFinancePoint += 1;
-				break;
+			break;
+		case FORWARD:
+			improveFinancePoint += 1;
+			break;
 
-			case DOWNWARD:
-				improveFinancePoint -= 1;
-				break;
-			case MORE_DOWNWARD:
+		case DOWNWARD:
+			improveFinancePoint -= 1;
+			break;
+		case MORE_DOWNWARD:
 
-				break;
+			break;
 		}
 
 		switch (financeInfo.getImproveBenefit()) {
-			case MORE_FORWARD:
+		case MORE_FORWARD:
 
-				break;
-			case FORWARD:
-				improveFinancePoint += 3;
-				break;
+			break;
+		case FORWARD:
+			improveFinancePoint += 3;
+			break;
 
-			case DOWNWARD:
-				improveFinancePoint -= 3;
-				break;
-			case MORE_DOWNWARD:
+		case DOWNWARD:
+			improveFinancePoint -= 3;
+			break;
+		case MORE_DOWNWARD:
 
-				break;
+			break;
 		}
 
 		switch (financeInfo.getImproveDebtRate()) {
-			case MORE_FORWARD:
-				improveFinancePoint += 2;
-				break;
-			case FORWARD:
-				improveFinancePoint += 1;
-				break;
+		case MORE_FORWARD:
+			improveFinancePoint += 2;
+			break;
+		case FORWARD:
+			improveFinancePoint += 1;
+			break;
 
-			case DOWNWARD:
-				improveFinancePoint -= 1;
-				break;
-			case MORE_DOWNWARD:
-				improveFinancePoint -= 2;
-				break;
+		case DOWNWARD:
+			improveFinancePoint -= 1;
+			break;
+		case MORE_DOWNWARD:
+			improveFinancePoint -= 2;
+			break;
 		}
 
 		switch (financeInfo.getImproveRetentionRate()) {
-			case MORE_FORWARD:
-				improveFinancePoint += 2;
-				break;
-			case FORWARD:
-				improveFinancePoint += 1;
-				break;
+		case MORE_FORWARD:
+			improveFinancePoint += 2;
+			break;
+		case FORWARD:
+			improveFinancePoint += 1;
+			break;
 
-			case DOWNWARD:
-				improveFinancePoint -= 1;
-				break;
-			case MORE_DOWNWARD:
-				improveFinancePoint -= 2;
-				break;
+		case DOWNWARD:
+			improveFinancePoint -= 1;
+			break;
+		case MORE_DOWNWARD:
+			improveFinancePoint -= 2;
+			break;
 		}
 
 		return improveFinancePoint;
@@ -233,9 +241,11 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	/**
 	 * Render.
 	 *
-	 * @param view the view
+	 * @param view
+	 *            the view
 	 * @return the string
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private String render(Object view) throws IOException {
 		StringWriter writer = new StringWriter();
@@ -247,7 +257,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	/**
 	 * Finance info.
 	 *
-	 * @param stockCode the stock code
+	 * @param stockCode
+	 *            the stock code
 	 * @return the finance info
 	 */
 	private FinanceInfo financeInfo(String stockCode) {
@@ -282,7 +293,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 			improveDebtRate = buildFinanceStatus(last, first, 10);
 		}
 
-		final Elements retentionRateElements = companyInfoDocument.select("table > tbody > tr:nth-child(24) > td:not(.bgE)");
+		final Elements retentionRateElements = companyInfoDocument
+				.select("table > tbody > tr:nth-child(24) > td:not(.bgE)");
 		FinanceStatus improveRetentionRate = FinanceStatus.DOWNWARD;
 		if (retentionRateElements != null) {
 			final Double first = NumberUtils.toDouble(retentionRateElements.first().text().replaceAll(",", ""));
@@ -296,9 +308,11 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	private FinanceStatus buildFinanceStatus(final Double param1, final Double param2, final Integer criterion) {
 		FinanceStatus improveDebtRate;
 		if (param2 >= param1) {
-			improveDebtRate = (((param2 - param1) * 100) / param1 > criterion) ? FinanceStatus.MORE_FORWARD : FinanceStatus.FORWARD;
+			improveDebtRate = (((param2 - param1) * 100) / param1 > criterion) ? FinanceStatus.MORE_FORWARD
+					: FinanceStatus.FORWARD;
 		} else {
-			improveDebtRate = (((param2 - param1) * 100) / param1 < -criterion) ? FinanceStatus.MORE_DOWNWARD : FinanceStatus.DOWNWARD;
+			improveDebtRate = (((param2 - param1) * 100) / param1 < -criterion) ? FinanceStatus.MORE_DOWNWARD
+					: FinanceStatus.DOWNWARD;
 		}
 		return improveDebtRate;
 	}
@@ -306,7 +320,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	/**
 	 * Today price info.
 	 *
-	 * @param stockCode the stock code
+	 * @param stockCode
+	 *            the stock code
 	 * @return the price info
 	 */
 	private PriceInfo todayPriceInfo(String stockCode) {
@@ -328,7 +343,8 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 	 * Dividend record.
 	 *
 	 * @return the list
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public List<CompanyInfo> dividendRecord() throws IOException {
 		List<CompanyInfo> companyInfoList = Lists.newArrayList();
@@ -348,7 +364,7 @@ public class DividenStockItemWriter implements ItemWriter<Map<String, Double>> {
 					continue;
 				}
 
-				//				LOG.debug("종목코드 = {}, 회사명 = {}", stockCode, name);
+				// LOG.debug("종목코드 = {}, 회사명 = {}", stockCode, name);
 				companyInfoList.add(new CompanyInfo(name, stockCode, dividenRecord));
 			}
 		} catch (Exception e) {
@@ -364,7 +380,8 @@ class FinanceInfo {
 	private FinanceStatus improveDebtRate;
 	private FinanceStatus improveRetentionRate;
 
-	public FinanceInfo(FinanceStatus improveSales, FinanceStatus improveBenefit, FinanceStatus improveDebtRate, FinanceStatus improveRetentionRate) {
+	public FinanceInfo(FinanceStatus improveSales, FinanceStatus improveBenefit, FinanceStatus improveDebtRate,
+			FinanceStatus improveRetentionRate) {
 		this.improveSales = improveSales;
 		this.improveBenefit = improveBenefit;
 		this.improveDebtRate = improveDebtRate;

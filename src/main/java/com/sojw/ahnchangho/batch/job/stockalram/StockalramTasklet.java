@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.batch.core.StepContribution;
@@ -39,22 +39,27 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class StockalramTasklet implements Tasklet {
 	private static final String STOCK_NOTICE_VIEW = "http://m.dart.fss.or.kr/html_mdart/MD1007.html?rcpNo=";
-	//	private static final String DART_API_URL = "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=50&start_dt=%s&dsp_tp=A&dsp_tp=B&dsp_tp=D&dsp_tp=F&dsp_tp=I&dsp_tp=J&page_no=3";
+	// private static final String DART_API_URL =
+	// "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=50&start_dt=%s&dsp_tp=A&dsp_tp=B&dsp_tp=D&dsp_tp=F&dsp_tp=I&dsp_tp=J&page_no=3";
 
 	private static final String DART_API_URL = "http://dart.fss.or.kr/api/search.json?auth=%s&page_set=100&start_dt=%s";
 	private static final String DART_API_KEY = "62d77fc171e7f887beac19fc86b4d20df1337be3";
-	private static final List<String> DART_API_KEY_LIST = Lists.newArrayList("62d77fc171e7f887beac19fc86b4d20df1337be3", "e69ccf51150b4951b8c576c467e7d35e2a538b11");
+	private static final List<String> DART_API_KEY_LIST = Lists.newArrayList("62d77fc171e7f887beac19fc86b4d20df1337be3",
+			"e69ccf51150b4951b8c576c467e7d35e2a538b11");
 
-	private static final String SAVE_FILE_FORMATT = FileUtils.currentRelativeRootPath() + System.getProperties().getProperty("file.separator") + "stock_alram_%s-%s-%s.txt";
+	private static final String SAVE_FILE_FORMATT = FileUtils.currentRelativeRootPath()
+			+ System.getProperties().getProperty("file.separator") + "stock_alram_%s-%s-%s.txt";
 
-	private static final List<String> FIND_KEYWORD_LIST = Lists.newArrayList("유상증자결정", "공급계약체결", "단일판매ㆍ공급계약체결", "특수관계인의유상증자참여", "유상증자참여", "최대주주변경을수반하는주식양수도계약체결", "영업(잠정)실적(공정공시)",
-		"연결재무제표기준영업(잠정)실적(공정공시)", "실적", "제3자배정", "배당");
+	private static final List<String> FIND_KEYWORD_LIST = Lists.newArrayList("유상증자결정", "공급계약체결", "단일판매ㆍ공급계약체결",
+			"특수관계인의유상증자참여", "유상증자참여", "최대주주변경을수반하는주식양수도계약체결", "영업(잠정)실적(공정공시)", "연결재무제표기준영업(잠정)실적(공정공시)", "실적", "제3자배정",
+			"배당");
 
-	private static final List<String> EXCLUDE_KEYWORD_LIST = Lists.newArrayList("기재정정", "종속회사의주요경영사항", "결산실적공시예고", "자회사의 주요경영사항", "자회사의주요경영사항", "증권발행실적보고서", "증권발행결과");
+	private static final List<String> EXCLUDE_KEYWORD_LIST = Lists.newArrayList("기재정정", "종속회사의주요경영사항", "결산실적공시예고",
+			"자회사의 주요경영사항", "자회사의주요경영사항", "증권발행실적보고서", "증권발행결과");
 
 	private static final String NEWS_DELIMITER = "|";
-	private static String KOSDAQ = "K";//코스닥
-	private static String KOSPI = "Y";//유가증권
+	private static String KOSDAQ = "K";// 코스닥
+	private static String KOSPI = "Y";// 유가증권
 
 	@Autowired
 	private RestTemplate restTemplate;
@@ -62,8 +67,12 @@ public class StockalramTasklet implements Tasklet {
 	@Autowired
 	private LineClient lineClient;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.batch.core.step.tasklet.Tasklet#execute(org.springframework.batch.core.StepContribution, org.springframework.batch.core.scope.context.ChunkContext)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.batch.core.step.tasklet.Tasklet#execute(org.
+	 * springframework.batch.core.StepContribution,
+	 * org.springframework.batch.core.scope.context.ChunkContext)
 	 */
 	@Override
 	public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
@@ -72,9 +81,12 @@ public class StockalramTasklet implements Tasklet {
 		log.debug("date = {}", date);
 
 		try {
-			//			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, DART_API_KEY, date), SearchResult.class);
+			// final SearchResult result =
+			// restTemplate.getForObject(String.format(DART_API_URL, DART_API_KEY, date),
+			// SearchResult.class);
 			String apiKey = DART_API_KEY_LIST.get(RandomUtils.nextInt(0, 2));
-			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, apiKey, date), SearchResult.class);
+			final SearchResult result = restTemplate.getForObject(String.format(DART_API_URL, apiKey, date),
+					SearchResult.class);
 			if (!StringUtils.equalsIgnoreCase(result.getErrCode(), "000")) {
 				log.error("error!!! result = {}", result);
 				return RepeatStatus.FINISHED;
@@ -101,12 +113,14 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Send news.
 	 *
-	 * @param news the news
+	 * @param news
+	 *            the news
 	 */
 	private void sendNews(final List<ListItem> news) {
 		for (ListItem item : news) {
-			String msg = "[" + item.getCrpNm() + "] " + item.getRptNm() + " " + STOCK_NOTICE_VIEW + item.getRcpNo() + " , " + "http://m.stock.naver.com/item/main.nhn#/stocks/" + item.getCrpCd()
-				+ "/discuss" + "\r\n\r\n";
+			String msg = "[" + item.getCrpNm() + "] " + item.getRptNm() + " " + STOCK_NOTICE_VIEW + item.getRcpNo()
+					+ " , " + "http://m.stock.naver.com/item/main.nhn#/stocks/" + item.getCrpCd() + "/discuss"
+					+ "\r\n\r\n";
 			log.debug("msg = {}", msg);
 
 			lineClient.send(msg);
@@ -116,8 +130,10 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Extract news.
 	 *
-	 * @param result the result
-	 * @param lastNewsId the last alram item
+	 * @param result
+	 *            the result
+	 * @param lastNewsId
+	 *            the last alram item
 	 * @return the list
 	 */
 	private List<ListItem> extractNews(final SearchResult result, final String lastNewsId) {
@@ -152,7 +168,8 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Append news title.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	private void appendNewsTitle(final ListItem item) {
 		if (StringUtils.contains(item.getRptNm().replaceAll(" ", ""), "유상증자")) {
@@ -165,7 +182,8 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Exclude keyword.
 	 *
-	 * @param rptNm the rpt nm
+	 * @param rptNm
+	 *            the rpt nm
 	 * @return the boolean
 	 */
 	private Boolean excludeKeyword(final String rptNm) {
@@ -181,7 +199,8 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Find keyword.
 	 *
-	 * @param rptNm the rpt nm
+	 * @param rptNm
+	 *            the rpt nm
 	 * @return the boolean
 	 */
 	private Boolean findKeyword(final String rptNm) {
@@ -197,22 +216,28 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Search news contents.
 	 *
-	 * @param rcpNo the rcp no
-	 * @param findKeyword the find keyword
+	 * @param rcpNo
+	 *            the rcp no
+	 * @param findKeyword
+	 *            the find keyword
 	 * @return the boolean
 	 */
 	private Boolean searchNewsContents(final String rcpNo, final String findKeyword) {
 		try {
-			final ResponseEntity<Map<String, String>> result = restTemplate.exchange(UriUtils.of("http://m.dart.fss.or.kr/viewer/main.st?rcpNo=" + rcpNo, Collections.emptyMap()), HttpMethod.GET, null,
-				new ParameterizedTypeReference<Map<String, String>>() {});
+			final ResponseEntity<Map<String, String>> result = restTemplate.exchange(
+					UriUtils.of("http://m.dart.fss.or.kr/viewer/main.st?rcpNo=" + rcpNo, Collections.emptyMap()),
+					HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, String>>() {
+					});
 			if (StringUtils.contains(result.getBody().get("reportBody"), findKeyword)) {
 				return Boolean.TRUE;
 			}
 
-			//			final Map<String, String> result = restTemplate.getForObject("http://m.dart.fss.or.kr/viewer/main.st?rcpNo=" + rcpNo, Map.class);
-			//			if (StringUtils.contains(result.get("reportBody"), findKeyword)) {
-			//				return Boolean.TRUE;
-			//			}
+			// final Map<String, String> result =
+			// restTemplate.getForObject("http://m.dart.fss.or.kr/viewer/main.st?rcpNo=" +
+			// rcpNo, Map.class);
+			// if (StringUtils.contains(result.get("reportBody"), findKeyword)) {
+			// return Boolean.TRUE;
+			// }
 		} catch (Exception e) {
 			log.error("", e);
 		}
@@ -223,9 +248,12 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Save last news item.
 	 *
-	 * @param now the now
-	 * @param news the news
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param now
+	 *            the now
+	 * @param news
+	 *            the news
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private void saveLastNewsItem(final LocalDate now, final List<ListItem> news) throws IOException {
 		if (CollectionUtils.isEmpty(news)) {
@@ -233,8 +261,10 @@ public class StockalramTasklet implements Tasklet {
 		}
 
 		final ListItem item = news.get(0);
-		final List<String> alramJoin = Lists.newArrayList(item.getCrpNm(), item.getCrpCd(), item.getRptNm(), item.getRcpNo());
-		final File saveLastAlram = new File(String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
+		final List<String> alramJoin = Lists.newArrayList(item.getCrpNm(), item.getCrpCd(), item.getRptNm(),
+				item.getRcpNo());
+		final File saveLastAlram = new File(
+				String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
 		Files.write(StringUtils.join(alramJoin, NEWS_DELIMITER), saveLastAlram, Charset.defaultCharset());
 		Files.write(item.getRcpNo(), saveLastAlram, Charset.defaultCharset());
 	}
@@ -242,12 +272,16 @@ public class StockalramTasklet implements Tasklet {
 	/**
 	 * Read last news item.
 	 *
-	 * @param now the now
+	 * @param now
+	 *            the now
 	 * @return the string
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	private String readLastNewsItem(final LocalDate now) throws IOException {
-		final File readLastAlram = new File(String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
-		return (readLastAlram.exists()) ? Files.readFirstLine(readLastAlram, Charset.defaultCharset()) : StringUtils.EMPTY;
+		final File readLastAlram = new File(
+				String.format(SAVE_FILE_FORMATT, now.getYear(), now.getMonthValue(), now.getDayOfMonth()));
+		return (readLastAlram.exists()) ? Files.readFirstLine(readLastAlram, Charset.defaultCharset())
+				: StringUtils.EMPTY;
 	}
 }

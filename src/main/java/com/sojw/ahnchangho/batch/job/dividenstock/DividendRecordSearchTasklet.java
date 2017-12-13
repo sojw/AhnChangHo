@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections4.MapUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
