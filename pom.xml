@@ -299,7 +299,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -310,27 +310,27 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>quartz</groupId>
@@ -341,12 +341,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-lang</groupId>
@@ -357,7 +357,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jms</artifactId>
-			<version>4.3.9.RELEASE</version>
+			<version>4.3.14.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
